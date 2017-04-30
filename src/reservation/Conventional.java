@@ -5,10 +5,8 @@ import java.util.Date;
 public class Conventional extends Reservation{
 
 	
-	
-
-	public Conventional(String dateOfArrival, int numberOfRoomsBooked, String type, String dateOfDeparture) {
-		super(dateOfArrival, numberOfRoomsBooked, type, dateOfDeparture);
+	public Conventional(String dateOfArrival, int numberOfRoomsBooked, String dateOfDeparture) {
+		super(dateOfArrival, numberOfRoomsBooked, dateOfDeparture);
 		// TODO Auto-generated constructor stub
 	}
 

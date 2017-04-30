@@ -1,14 +1,14 @@
 package controller;
-
-import java.util.Date;
+import java.text.ParseException;
 import java.util.Scanner;
 
-import reservation.Prepaid_Reservation;
 import reservation.Reservation;
 
 public class Controller {
 
-	public static void main(String args[]) {
+	static Reservation R = null;
+
+	public static void main(String args[]) throws ParseException {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Date of Arrival: ");
 		String doa = sc.nextLine();
@@ -21,46 +21,64 @@ public class Controller {
 		System.out.println();
 		System.out.println("No of Rooms Needed : ");
 		int norb = sc.nextInt();
-		enterReservationDetails(doa, dod, type, norb);
+		R = enterReservationDetails(doa, dod, type, norb);
+		if (R != null) {
+			// DO SOMETHING
+			System.out.println("Room is Available.\nTotal Amount : " + R.getAmount());
+			sc.nextLine();
+			System.out.println("Enter Name: ");
+			String name = sc.nextLine();
+			System.out.println();
+			System.out.println("Enter Email : ");
+			String email = sc.nextLine();
+			System.out.println();
+
+			enterGuestDetails(name, email);
+			System.out.println("Enter ccNumber : ");
+			String ccNumber = sc.nextLine();
+			if (enterCreditCardDetails(ccNumber)) {
+				System.out.println("Payment Successfull");
+				updatePaymentStatus(true);
+				updateReservation(true);
+			}
+		} else {
+			System.out.println("Room Not Availiabilty");
+		}
+
 	}
 
 	public Reservation createNewSession() {
 		return null;
 	}
 
-	public static void enterReservationDetails(String doa, String dod, String type, int norb) {
-		type = type.toLowerCase();
-		switch (type) {
-		case "prepaid":
-			Prepaid_Reservation p=new Prepaid_Reservation(doa, norb, type, dod);
-			
-			break;
-		case "sixty days in advance":
-
-			break;
-		case "conventional":
-
-			break;
-		case "incentive":
-
-			break;
+	public static Reservation enterReservationDetails(String doa, String dod, String type, int norb) throws ParseException {
+		Reservation R = new Reservation(doa, dod, type, norb);
+		R = R.enterReservationDetails(doa, dod, type, norb);
+		if (R != null) {
+			return R;
+		} else {
+			return null;
 		}
-	}
-
-	public void enterGuestDetails(String name, String email) {
 
 	}
 
-	public void updatePaymentStatus(boolean isPaymentMade) {
+	public static void enterGuestDetails(String name, String email) {
+
+		R.enterGuestDetails(name, email);
+	}
+
+	public static void updatePaymentStatus(boolean isPaymentMade) {
+		R.updatePaymentStatus(isPaymentMade);
+	}
+
+	public static boolean enterCreditCardDetails(String ccNumber) {
+
+		return R.enterCreditCardDetails(ccNumber);
 
 	}
 
-	public boolean enterCreditCardDetails(String ccNumeber) {
-		return true;
-	}
-
-	public void updateReservation(boolean status) {
-
+	public static void updateReservation(boolean status) {
+		R.updateReservation(status);
 	}
 
 	public void endSession() {

@@ -1,18 +1,30 @@
 package reservation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class Prepaid_Reservation extends Reservation {
 
 
-	public Prepaid_Reservation(String dateOfArrival, int numberOfRoomsBooked, String type, String dateOfDeparture) {
-		super(dateOfArrival, numberOfRoomsBooked, type, dateOfDeparture);
+	public Prepaid_Reservation(String dateOfArrival, String dateOfDeparture, String type, int numberOfRoomsBooked) {
+		super(dateOfArrival, dateOfDeparture, type, numberOfRoomsBooked);
 		// TODO Auto-generated constructor stub
 	}
 
-	public double calculateTotalAmount()
+	public double calculateTotalAmount() throws ParseException
 	{
-		return 0;
+		Calendar mydate = new GregorianCalendar();
+		Date doa = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(dateOfArrival);
+		Date dod = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(dateOfDeparture);
+		
+		//mydate.setTime(thedate);
+		int diff = (int)( (dod.getTime() - doa.getTime()) / (1000 * 60 * 60 * 24) );
+		System.out.println("Baserate: "+baseRate);
+		return((double)0.75*baseRate*diff);
 	}
 	
 	public void create(Date doa,Date dod,String type,int norb)
@@ -22,12 +34,14 @@ public class Prepaid_Reservation extends Reservation {
 	
 	public void enterGuestDetails(String name,String email)
 	{
-		
+		//System.out.println("Prepaid mathod");
+		super.enterGuestDetails(name, email);
 	}
 	
 	public void updateReservation(boolean status)
 	{
-		
+		super.updateReservation(status);	
+		//super.enterCreditCardDetails(name, email);
 	}
 
 }
