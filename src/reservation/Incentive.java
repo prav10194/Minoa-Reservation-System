@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Incentive extends Reservation{
 
-	public Incentive(int bookingId, Date dateOfArrival, double baseRate, int numberOfRoomsBooked, String type,
-			Date dateOfDeparture, Date dateOfBooking, String email, String name, boolean isPaymentMade, boolean status,
-			String ccNumber) {
-		super(bookingId, dateOfArrival, baseRate, numberOfRoomsBooked, type, dateOfDeparture, dateOfBooking, email, name,
-				isPaymentMade, status, ccNumber);
+	
+	
+
+	public Incentive(String dateOfArrival, int numberOfRoomsBooked, String type, String dateOfDeparture) {
+		super(dateOfArrival, numberOfRoomsBooked, type, dateOfDeparture);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public double calculateTotalAmount()
 	{
 		return 0;
