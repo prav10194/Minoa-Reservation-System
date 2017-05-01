@@ -1,5 +1,6 @@
 package reservation;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,8 +19,8 @@ public class Prepaid_Reservation extends Reservation {
 	public double calculateTotalAmount() throws ParseException
 	{
 		Calendar mydate = new GregorianCalendar();
-		Date doa = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(dateOfArrival);
-		Date dod = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(dateOfDeparture);
+		Date doa = new SimpleDateFormat("mm-dd-yyyy", Locale.ENGLISH).parse(dateOfArrival);
+		Date dod = new SimpleDateFormat("mm-dd-yyyy", Locale.ENGLISH).parse(dateOfDeparture);
 		
 		//mydate.setTime(thedate);
 		int diff = (int)( (dod.getTime() - doa.getTime()) / (1000 * 60 * 60 * 24) );
@@ -38,7 +39,7 @@ public class Prepaid_Reservation extends Reservation {
 		super.enterGuestDetails(name, email);
 	}
 	
-	public void updateReservation(boolean status)
+	public void updateReservation(boolean status) throws SQLException
 	{
 		super.updateReservation(status);	
 		//super.enterCreditCardDetails(name, email);

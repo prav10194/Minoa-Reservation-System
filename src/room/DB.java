@@ -1,13 +1,24 @@
 package room;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import reservation.Reservation;
 
-public class DB {
 
-	public DB() {
+
+public class DB {
+	int counter=1;
+	Connection conn = null;
+	public DB() throws SQLException {
 		System.out.println("SET CONNECTION HERE");
 		// TODO Auto-generated constructor stub
+		 conn = DriverManager.getConnection("jdbc:ucanaccess://C://Users//Pranav//Desktop//Reservation.accdb");
+		 
 	}
 	public boolean checkAvailability(String doa,String dod,int norb)
 	{
@@ -19,8 +30,26 @@ public class DB {
 	{
 		
 	}
-	public void addToDatabase(Reservation R){
+	public void addToDatabase(Reservation R) throws SQLException{
 		System.out.println("ADD HERE");
+		Statement st=conn.createStatement();
+		
+        //     rs1=st.executeUpdate("insert into Student(SID,First,Last,Address,City,State,Zip,Email,GPA) values ('"+SID+"','"+fn+"','"+ln+"','"+add+"','"+city+"','"+state+"','"+zip+"','"+email+"','"+gpa+"')");
+		st.executeUpdate("INSERT into ReservationRecords VALUES("+ counter +", '"
+        +R.getDateOfArrival()+"','"
+        +R.getBaseRate()+"','"
+				+R.getAmount()+"','"
+        +R.getNumberOfRoomsBooked()+"','"
+				+R.getType()+"','"
+        +R.getDateOfDeparture()+"','"
+				+R.getDateOfBooking()+"','"
+        +R.getEmail()+"','"
+				+R.getName()+"','"
+        +R.isPaymentMade()+"','"
+				+R.isStatus()+"','"
+        +R.getCcNumber()+"')");             
+		
+		counter=counter+1;
 	}
 	public double getBaseRate(String doa) {
 		// TODO Auto-generated method stub

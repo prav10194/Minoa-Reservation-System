@@ -1,5 +1,8 @@
 package controller;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import reservation.Reservation;
@@ -8,7 +11,7 @@ public class Controller {
 
 	static Reservation R = null;
 
-	public static void main(String args[]) throws ParseException {
+	public static void main(String args[]) throws ParseException, SQLException {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Date of Arrival: ");
 		String doa = sc.nextLine();
@@ -22,6 +25,11 @@ public class Controller {
 		System.out.println("No of Rooms Needed : ");
 		int norb = sc.nextInt();
 		R = enterReservationDetails(doa, dod, type, norb);
+		
+		//Setting Current Date
+		String timeStamp = new SimpleDateFormat("MM-dd-yyyy").format(Calendar.getInstance().getTime());
+		R.setDateOfBooking(timeStamp);
+		
 		if (R != null) {
 			// DO SOMETHING
 			System.out.println("Room is Available.\nTotal Amount : " + R.getAmount());
@@ -51,8 +59,10 @@ public class Controller {
 		return null;
 	}
 
-	public static Reservation enterReservationDetails(String doa, String dod, String type, int norb) throws ParseException {
+	public static Reservation enterReservationDetails(String doa, String dod, String type, int norb) throws ParseException, SQLException {
 		Reservation R = new Reservation(doa, dod, type, norb);
+		
+		//System.out.println("Date: "+R.getDateOfBooking());
 		R = R.enterReservationDetails(doa, dod, type, norb);
 		if (R != null) {
 			return R;
@@ -77,7 +87,7 @@ public class Controller {
 
 	}
 
-	public static void updateReservation(boolean status) {
+	public static void updateReservation(boolean status) throws SQLException {
 		R.updateReservation(status);
 	}
 

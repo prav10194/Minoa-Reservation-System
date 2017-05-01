@@ -1,5 +1,6 @@
 package reservation;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 
 import payment.Payment;
@@ -126,7 +127,7 @@ public class Reservation {
 	}
 
 	// REMOVE ONE PARAMETER
-	public void updateReservation(boolean status) {
+	public void updateReservation(boolean status) throws SQLException {
 		this.status = status;
 		DB database = new DB();
 		database.addToDatabase(this);
@@ -141,9 +142,10 @@ public class Reservation {
 
 	}
 
-	public Reservation enterReservationDetails(String doa, String dod, String type, int norb) throws ParseException {
+	public Reservation enterReservationDetails(String doa, String dod, String type, int norb) throws ParseException, SQLException {
 
 		DB rdb = new DB();
+		
 		Reservation res = null;
 
 		boolean availiabilty = rdb.checkAvailability(doa, dod, norb);
