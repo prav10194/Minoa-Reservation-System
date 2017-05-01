@@ -18,7 +18,7 @@ public class DB {
 		System.out.println("SET CONNECTION HERE");
 		// TODO Auto-generated constructor stub
 		 conn = DriverManager.getConnection("jdbc:ucanaccess://C://Users//Pranav//Desktop//Reservation.accdb");
-		 
+	
 	}
 	public boolean checkAvailability(String doa,String dod,int norb)
 	{
@@ -33,8 +33,6 @@ public class DB {
 	public void addToDatabase(Reservation R) throws SQLException{
 		System.out.println("ADD HERE");
 		Statement st=conn.createStatement();
-		
-        //     rs1=st.executeUpdate("insert into Student(SID,First,Last,Address,City,State,Zip,Email,GPA) values ('"+SID+"','"+fn+"','"+ln+"','"+add+"','"+city+"','"+state+"','"+zip+"','"+email+"','"+gpa+"')");
 		st.executeUpdate("INSERT into ReservationRecords VALUES("+ counter +", '"
         +R.getDateOfArrival()+"','"
         +R.getBaseRate()+"','"
@@ -51,9 +49,16 @@ public class DB {
 		
 		counter=counter+1;
 	}
-	public double getBaseRate(String doa) {
+	public double getBaseRate(String doa) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println("RETURN BASE RATE OF THE ARRIVAL DATE:"+" "+doa);
+		Statement st=conn.createStatement();
+		ResultSet rs=null;
+        rs=st.executeQuery("select * from BaseRate where date='"+doa+"'");
+        while(rs.next())
+        {
+            return rs.getDouble(2);
+        }
 		return 100;
 	}
 
