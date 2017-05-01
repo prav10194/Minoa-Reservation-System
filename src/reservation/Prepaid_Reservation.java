@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import payment.Payment;
 
 public class Prepaid_Reservation extends Reservation {
 
@@ -18,19 +19,21 @@ public class Prepaid_Reservation extends Reservation {
 
 	public double calculateTotalAmount() throws ParseException
 	{
-		Calendar mydate = new GregorianCalendar();
-		Date doa = new SimpleDateFormat("mm-dd-yyyy", Locale.ENGLISH).parse(dateOfArrival);
-		Date dod = new SimpleDateFormat("mm-dd-yyyy", Locale.ENGLISH).parse(dateOfDeparture);
-		
 		//mydate.setTime(thedate);
-		int diff = (int)( (dod.getTime() - doa.getTime()) / (1000 * 60 * 60 * 24) );
-		System.out.println("Baserate: "+baseRate);
+		int diff = difference(dateOfArrival,dateOfDeparture);
 		return((double)0.75*baseRate*diff);
 	}
 	
 	public void create(Date doa,Date dod,String type,int norb)
 	{
 		
+	}
+	
+	public boolean enterCreditCardDetails(String ccNumber) {
+		//this must have a validating part too. 
+		this.ccNumber = ccNumber;
+		Payment pay = new Payment();
+		return pay.createPayment(ccNumber);
 	}
 	
 	public void enterGuestDetails(String name,String email)
